@@ -5,17 +5,17 @@ import static parkingapp.TicketMachine.vehicleID;
 import static parkingapp.TicketMachine.vehiclesInGarage;
 
 /**
- *
- * @author tquigley1
- * 
  * This class describes the function of vehicle check-in to the Parking Garage.
+ * When the class is instantiated, the constructor will add a new vehicle to the 
+ * Vehicle ArrayList.
+ * 
+ * @author tquigley1
  */
 public class CheckIn {
     
-    public CheckIn(ArrayList<Vehicle> vehicle) {
-        TimeRoutine timeRoutine = new TimeRoutine();
+    public CheckIn(ArrayList<Vehicle> vehicle, boolean specialEvent) {
         vehicleID++;
-        vehicle.add(new Vehicle(vehicleID, timeRoutine.getCheckInTime()));
+        vehicle.add(new Vehicle(vehicleID, TimeRoutine.getCheckInTime(), specialEvent));
         vehiclesInGarage++;
     }
     

@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import static parkingapp.TicketMachine.vehicleID;
 import static parkingapp.TicketMachine.vehiclesInGarage;
-import static parkingapp.TicketMachine.endLoop;
+import static parkingapp.TicketMachine.closeGarage;
 
 /**
  *
- * @author tquigley1
- * 
  * This is the driver class of a Parking Garage application.  The objective is to
  * simulate an automated garage where a vehicle operator drives up to a check-in ticket booth,
  * gets an "entrance" ticket, and the time of arrival is recorded.  When the vehicle exits the 
@@ -20,8 +18,9 @@ import static parkingapp.TicketMachine.endLoop;
  * and pays via the automated teller.  The payment amount, arrival and departure time, are 
  * recorded.
  * 
- * There are two options at the check-in booth:
+ * There are three options at the check-in booth:
  * 1.  Check/In
+ * 2.  Special Event
  * 3.  Close Garage
  * 
  * There are two options at the check-out booth:
@@ -56,6 +55,10 @@ import static parkingapp.TicketMachine.endLoop;
  * g.  When the "Close Garage" option is chosen, the application will create an activity
  *     report and close the program.  All vehicles currently in the garage will remain 
  *     in the garage.
+ * 
+ * @author tquigley1
+ * @version 2.0
+ * @since 05-11-2019
  */
 public class ParkingApp {
 
@@ -67,16 +70,24 @@ public class ParkingApp {
         double vehicleCharge;
         String lostTicketString;
         boolean lostTicket;
+        String specialEventString;
+        boolean specialEvent;
 
-        // Populate initial Parking Garage using input file
+        /**
+         * Populate initial Parking Garage using input file.
+         */
         
-        // Open input file
+        /**
+         * Open input file.
+         */
         String filename = "ParkingApp.txt";
         File file = new File(filename);
         Scanner inputFile = new Scanner(file);
         
-        // Read through input file and populate ArrayList
-        ArrayList<Vehicle> vehicle = new ArrayList<Vehicle>();
+        /**
+         * Read through input file and populate ArrayList.
+         */
+        ArrayList<Vehicle> vehicle = new ArrayList<>();
         vehiclesInGarage = 0;
         while (inputFile.hasNextLine()) {
             inputRecord = inputFile.nextLine();
@@ -92,30 +103,56 @@ public class ParkingApp {
             } else {
                 lostTicket = true;
             }
-            vehicleCharge = Double.parseDouble(inputRecord.substring(17).trim());
-            vehicle.add(new Vehicle(loadVehicleID, checkInTime, checkOutTime, vehicleCharge, lostTicket));
+            specialEventString = inputRecord.substring(17,22);
+            if (specialEventString.equals("false")) {
+                specialEvent = false;
+            } else {
+                specialEvent = true;
+            }
+            vehicleCharge = Double.parseDouble(inputRecord.substring(22).trim());
+            vehicle.add(new Vehicle(loadVehicleID, checkInTime, checkOutTime, vehicleCharge, lostTicket, specialEvent));
         }
-        // Close input file
+        
+        /**
+         * Close input file.
+         */
         inputFile.close();
 
-        // Execute main loop of Parking Garage application
+        /**
+         * Instantiate Singleton classes.
+         */
+        ChargeFactory chargeFactory = ChargeFactoryImpl.INSTANCE;
+        ChargeApp chargeApp = new ChargeApp(chargeFactory);
+        chargeApp.getInstance();
+        TimeRoutine timeRoutine = TimeRoutine.INSTANCE;
+        
+        /**
+         * Execute main loop of Parking Garage application.
+         */
         vehicleID = loadVehicleID;
         do {
             TicketMachine ticketMachine = new TicketMachine(vehicle);
-        } while (!endLoop);
+        } while (!closeGarage);
 
-        // Open output file
+        /**
+         * Open output file.
+         */
         PrintWriter outputFile = new PrintWriter(filename);
         
-        // Write all members of vehicle to output file
+        /**
+         * Write all members of vehicle to output file.
+         */
         if (!vehicle.isEmpty()) {
             for (int loop = 0; loop < vehicle.size(); loop++) {
-                outputFile.printf("%-4d%-4d%-4d%-5b%-20f\n", vehicle.get(loop).getVehicleID(), vehicle.get(loop).getCheckInTime(), 
-                        vehicle.get(loop).getCheckOutTime(), vehicle.get(loop).getLostTicket(), vehicle.get(loop).getVehicleCharge());
+                outputFile.printf("%-4d%-4d%-4d%-5b%-5b%-20f\n", vehicle.get(loop).getVehicleID(), vehicle.get(loop).getCheckInTime(), 
+                        vehicle.get(loop).getCheckOutTime(), vehicle.get(loop).getLostTicket(), vehicle.get(loop).getSpecialEvent(),
+                        vehicle.get(loop).getVehicleCharge());
             }
         }
         
-        // Close output file
+        /**
+         * Close output file.
+         */
         outputFile.close();
         
     }
