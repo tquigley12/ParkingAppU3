@@ -1,0 +1,37 @@
+1   8   20  falsefalse14.000000           
+2   8   13  falsetrue 20.000000           
+3   7   16  true true 25.000000           
+4   10  17  falsefalse9.000000            
+5   8   21  falsefalse15.000000           
+6   9   18  falsefalse11.000000           
+7   12  23  true false25.000000           
+8   8   21  falsetrue 20.000000           
+9   8   21  falsetrue 20.000000           
+10  9   23  falsefalse15.000000           
+11  10  19  falsefalse11.000000           
+12  10  22  falsefalse14.000000           
+13  9   18  falsetrue 20.000000           
+14  12  20  falsefalse10.000000           
+15  11  20  falsetrue 20.000000           
+16  10  19  falsefalse11.000000           
+17  7   19  falsefalse14.000000           
+18  12  21  true false25.000000           
+19  7   15  falsetrue 20.000000           
+20  11  23  falsetrue 20.000000           
+21  12  0   falsefalse0.000000            
+22  9   18  true true 25.000000           
+23  7   16  falsefalse11.000000           
+24  9   20  true true 25.000000           
+25  7   22  falsefalse15.000000           
+26  12  21  falsefalse11.000000           
+27  12  0   falsetrue 0.000000            
+28  7   20  falsefalse15.000000           
+29  7   0   falsetrue 0.000000            
+30  11  0   falsefalse0.000000            
+31  8   0   falsefalse0.000000            
+32  10  0   falsefalse0.000000            
+33  12  13  falsefalse3.000000            
+34  12  0   falsefalse0.000000            
+10009   0   falsefalse0.000000            
+10019   0   falsefalse0.000000            
+100210  0   falsetrue 0.000000            
